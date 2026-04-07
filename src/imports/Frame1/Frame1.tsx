@@ -5,7 +5,6 @@ function useUtcTick() {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 250);
-    setNow(new Date());
     return () => window.clearInterval(timer);
   }, []);
   return now;
@@ -464,7 +463,8 @@ function MasterPassCard({
   passSnapshot?: PassSnapshot;
   stateOverride?: "inactive" | "upcoming" | "active" | "alarm";
 }) {
-  const pass = passSnapshot ?? useScheduledPass(passIndex, passName);
+  const scheduledPass = useScheduledPass(passIndex, passName);
+  const pass = passSnapshot ?? scheduledPass;
   const { az, el, bars } = useTelemetry(seedAz, seedEl, seedBars);
   const cardState: "inactive" | "upcoming" | "active" | "alarm" =
     stateOverride ??
