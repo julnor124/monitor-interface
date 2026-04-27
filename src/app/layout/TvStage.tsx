@@ -1,4 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
+// Provides the primary stage layout container.
 
 const DESIGN_WIDTH = 1920;
 const DESIGN_HEIGHT = 1080;

@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useUtcTick } from "../../ui/hooks/useUtcTick";
 import type { PassSnapshot } from "../types";
+// Computes and exposes scheduled pass state.
 
 const TOTAL_SCHEDULED_PASSES = 7;
 const PASS_START_INTERVAL_MIN = 7;
@@ -12,7 +13,7 @@ function formatHmUtc(date: Date) {
   ).padStart(2, "0")}`;
 }
 
-function formatRemainingMs(ms: number) {
+export function formatRemainingMs(ms: number) {
   if (ms <= 0) return "0s";
   const totalSec = Math.ceil(ms / 1000);
   if (totalSec < 60) return `${totalSec}s`;

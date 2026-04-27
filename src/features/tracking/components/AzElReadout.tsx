@@ -1,3 +1,4 @@
+// Shows azimuth and elevation tracking values.
 export function AzElReadout({
   az,
   el,

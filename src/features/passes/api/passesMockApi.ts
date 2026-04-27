@@ -6,6 +6,7 @@ import {
   type PassCardDefinitionDto,
 } from "./contracts";
 import { mapInactiveCardDto, mapPassCardDefinitionDto } from "./mappers";
+// Provides mock pass API responses for development.
 
 const passCardDefinitionDtos: PassCardDefinitionDto[] = [
   { name: "Vilma", passIndex: 0, passName: "north_arc_2148", modeLabel: "PROG", seedAz: 102.75, seedEl: 4.22, seedBars: [42, 76, 29] },

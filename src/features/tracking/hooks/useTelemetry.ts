@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+// Streams and derives live telemetry state.
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));

@@ -1,5 +1,6 @@
 import type { PassCardDefinition } from "../types";
 import type { InactiveCardDto, PassCardDefinitionDto } from "./contracts";
+// Maps API data into app-friendly models.
 
 export type InactiveCardViewModel = {
   name: string;

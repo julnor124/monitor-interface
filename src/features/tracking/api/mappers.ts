@@ -1,4 +1,5 @@
 import type { TrackingDisplayConfigDto } from "./contracts";
+// Maps API data into app-friendly models.
 
 export type TrackingDisplayConfig = {
   azLabel: string;

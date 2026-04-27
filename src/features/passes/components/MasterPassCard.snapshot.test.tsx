@@ -1,6 +1,7 @@
 import { render } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { MasterPassCard } from "./MasterPassCard";
+// Validates behavior with targeted unit tests.
 
 describe("MasterPassCard snapshots", () => {
   it("matches inactive visual structure", () => {

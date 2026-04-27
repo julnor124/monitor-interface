@@ -1,3 +1,4 @@
+// Declares shared TypeScript types for this feature.
 export type ModeLabel = "PROG" | "TRACK";
 
 export type CardState = "inactive" | "upcoming" | "active" | "alarm";

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { getScheduledPassSnapshot } from "./useScheduledPass";
+// Validates behavior with targeted unit tests.
 
 describe("getScheduledPassSnapshot", () => {
   it("returns stable upcoming state values", () => {

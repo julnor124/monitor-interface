@@ -1,4 +1,5 @@
 import { useUtcTick } from "../hooks/useUtcTick";
+// Renders the top navigation and status bar.
 
 export function TopBar({ stationLabel }: { stationLabel: string }) {
   const now = useUtcTick();
