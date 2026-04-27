@@ -19,6 +19,9 @@ export function MasterPassCard({
   forceAlarm = false,
   passSnapshot,
   stateOverride,
+  signalLabels,
+  azLabel,
+  elLabel,
 }: {
   name: string;
   passIndex: number;
@@ -31,6 +34,9 @@ export function MasterPassCard({
   forceAlarm?: boolean;
   passSnapshot?: PassSnapshot;
   stateOverride?: CardState;
+  signalLabels?: [string, string, string];
+  azLabel?: string;
+  elLabel?: string;
 }) {
   const scheduledPass = useScheduledPass(passIndex, passName);
   const pass = passSnapshot ?? scheduledPass;
@@ -90,8 +96,8 @@ export function MasterPassCard({
         <PassProgressBar progress={isLive ? pass.progress : 0} showIndicator={isLive} />
 
         <div className="grid min-w-0 grid-cols-[max-content_132px_minmax(0,1fr)] items-end gap-4 py-3">
-          <AzElReadout az={az} el={el} />
-          <SignalBars bars={bars} isLive={isLive} />
+          <AzElReadout az={az} el={el} azLabel={azLabel} elLabel={elLabel} />
+          <SignalBars bars={bars} isLive={isLive} labels={signalLabels} />
           <div className="min-w-0 self-start pt-1 text-right">
             {isLive ? (
               <div className="flex justify-end">

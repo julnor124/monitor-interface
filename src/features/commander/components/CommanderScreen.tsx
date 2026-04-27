@@ -1,15 +1,16 @@
-import { useUtcTick } from "../../ui/hooks/useUtcTick";
-import { TopBar } from "../../ui/components/TopBar";
-import type { CardState } from "../../passes/types";
-import { getScheduledPassSnapshot } from "../../passes/hooks/useScheduledPass";
 import { MasterPassCard } from "../../passes/components/MasterPassCard";
+import { getScheduledPassSnapshot } from "../../passes/hooks/useScheduledPass";
+import type { CardState } from "../../passes/types";
+import { TopBar } from "../../ui/components/TopBar";
+import { useUtcTick } from "../../ui/hooks/useUtcTick";
 import { useCommanderData } from "../hooks/useCommanderData";
+import type { CommanderSortedCard } from "../types";
 
 export function CommanderScreen() {
   const now = useUtcTick();
-  const { passCards, inactiveCards } = useCommanderData();
+  const { passCards, inactiveCards, signalConfig, trackingConfig } = useCommanderData();
 
-  const sortedCards = passCards
+  const sortedCards: CommanderSortedCard[] = passCards
     .map((card) => {
       const snapshot = getScheduledPassSnapshot(now.getTime(), card.passIndex, card.passName);
       const state: CardState = card.forceAlarm
@@ -46,6 +47,9 @@ export function CommanderScreen() {
             forceAlarm={card.forceAlarm}
             passSnapshot={card.snapshot}
             stateOverride={card.state}
+            signalLabels={signalConfig.labels}
+            azLabel={trackingConfig.azLabel}
+            elLabel={trackingConfig.elLabel}
           />
         ))}
       </div>
