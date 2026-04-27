@@ -1,4 +1,5 @@
 import type { ModeLabel } from "../../features/passes/types";
+// Shows compact status labels with styling.
 
 export function StatusBadge({ label }: { label: ModeLabel }) {
   return (

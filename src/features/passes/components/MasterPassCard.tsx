@@ -1,11 +1,13 @@
 import { SignalBars } from "../../signal/components/SignalBars";
 import { AzElReadout } from "../../tracking/components/AzElReadout";
 import { useTelemetry } from "../../tracking/hooks/useTelemetry";
+import { useUtcTick } from "../../ui/hooks/useUtcTick";
 import { StatusBadge } from "../../../shared/components/StatusBadge";
-import { useScheduledPass } from "../hooks/useScheduledPass";
+import { formatRemainingMs, useScheduledPass } from "../hooks/useScheduledPass";
 import type { CardState, ModeLabel, PassSnapshot } from "../types";
 import { MasterHourglassIcon } from "./MasterHourglassIcon";
 import { PassProgressBar } from "./PassProgressBar";
+// Renders the primary card for pass details.
 
 export function MasterPassCard({
   name,
@@ -38,6 +40,7 @@ export function MasterPassCard({
   azLabel?: string;
   elLabel?: string;
 }) {
+  const now = useUtcTick();
   const scheduledPass = useScheduledPass(passIndex, passName);
   const pass = passSnapshot ?? scheduledPass;
   const { az, el, bars } = useTelemetry(seedAz, seedEl, seedBars);
@@ -60,6 +63,10 @@ export function MasterPassCard({
           : "bg-[#4d5f71]";
   const upcomingLabel = pass.primary.replace(/\s*left$/, "");
   const isLongUpcomingLabel = upcomingLabel.length >= 8;
+  const liveCountdownLabel =
+    cardState === "alarm" && !pass.isActive
+      ? `${formatRemainingMs(Math.max(0, pass.startMs - now.getTime()))} left`
+      : pass.primary;
 
   if (cardState === "inactive") {
     return (
@@ -87,7 +94,7 @@ export function MasterPassCard({
         <div className="flex min-w-0 items-start justify-between gap-2">
           <p className="min-w-0 flex-1 truncate pr-2 text-[42px] leading-[1] text-[#f2f2f2]">{name}</p>
           {isLive ? (
-            <p className="max-w-[52%] truncate text-right text-[32px] leading-[1] text-[#f2f2f2]">{pass.primary}</p>
+            <p className="max-w-[52%] truncate text-right text-[32px] leading-[1] text-[#f2f2f2]">{liveCountdownLabel}</p>
           ) : (
             <p className="max-w-[52%] truncate text-right text-[32px] leading-[1] text-[#dbe6f4]">{pass.range}</p>
           )}

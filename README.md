@@ -9,6 +9,20 @@ npm install
 npm run dev
 ```
 
+## Runtime Modes
+
+The app supports mock or backend-backed data adapters.
+
+- `VITE_USE_MOCK_API` - `true` (default) uses `*MockApi` adapters
+- `VITE_API_BASE_URL` - base URL for HTTP adapters (default `/api`)
+
+Example:
+
+```bash
+VITE_USE_MOCK_API=false
+VITE_API_BASE_URL=https://your-backend.example.com/api
+```
+
 ## Scripts
 
 - `npm run dev` - Start development server
@@ -36,6 +50,7 @@ src/
     providers/
   features/
     commander/
+      types.ts
       components/
       hooks/
     passes/
@@ -44,8 +59,10 @@ src/
       hooks/
       types.ts
     signal/
+      api/
       components/
     tracking/
+      api/
       components/
       hooks/
     ui/
@@ -66,6 +83,14 @@ src/
   - `*Api.ts` (feature interface)
   - `*MockApi.ts` (mock implementation)
 - Reusable cross-feature UI belongs in `src/shared/components`.
+
+## Backend Integration
+
+Detailed backend documentation is available in:
+
+- `docs/backend-integration-playbook.md`
+
+This includes endpoint expectations, DTO contracts, error handling, rollout strategy, and testing guidance.
 
 ## Display Notes (TV Target)
 

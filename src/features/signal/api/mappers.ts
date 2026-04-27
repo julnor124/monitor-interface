@@ -1,4 +1,5 @@
 import type { SignalDisplayConfigDto } from "./contracts";
+// Maps API data into app-friendly models.
 
 export type SignalDisplayConfig = {
   labels: [string, string, string];

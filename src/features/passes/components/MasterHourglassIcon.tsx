@@ -1,4 +1,5 @@
 import svgPaths from "./svgPaths";
+// Renders the hourglass icon for pass progress.
 
 export function MasterHourglassIcon() {
   return (

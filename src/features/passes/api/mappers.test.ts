@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { passCardDefinitionDtoSchema } from "./contracts";
 import { mapPassCardDefinitionDto } from "./mappers";
+// Validates behavior with targeted unit tests.
 
 describe("passes dto contracts and mappers", () => {
   it("validates and maps pass card dto", () => {

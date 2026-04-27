@@ -2,6 +2,7 @@ import type { CardState, PassCardDefinition, PassSnapshot } from "../passes/type
 import type { InactiveCardViewModel } from "../passes/api/mappers";
 import type { SignalDisplayConfig } from "../signal/api/mappers";
 import type { TrackingDisplayConfig } from "../tracking/api/mappers";
+// Declares shared TypeScript types for this feature.
 
 export type CommanderSortedCard = PassCardDefinition & {
   snapshot: PassSnapshot;
@@ -16,4 +17,10 @@ export type CommanderData = {
   inactiveCards: InactiveCardViewModel[];
   signalConfig: SignalDisplayConfig;
   trackingConfig: TrackingDisplayConfig;
+};
+
+export type CommanderDataState = {
+  data: CommanderData;
+  isLoading: boolean;
+  errorMessage: string | null;
 };

@@ -1,3 +1,4 @@
+// Displays signal strength as bar indicators.
 export function SignalBars({
   bars,
   isLive,

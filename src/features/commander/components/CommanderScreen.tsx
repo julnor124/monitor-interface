@@ -5,34 +5,57 @@ import { TopBar } from "../../ui/components/TopBar";
 import { useUtcTick } from "../../ui/hooks/useUtcTick";
 import { useCommanderData } from "../hooks/useCommanderData";
 import type { CommanderSortedCard } from "../types";
+// Displays the commander feature main screen.
+
+function deriveCardState(forceAlarm: boolean | undefined, isActive: boolean): CardState {
+  if (forceAlarm) return "alarm";
+  return isActive ? "active" : "upcoming";
+}
 
 export function CommanderScreen() {
   const now = useUtcTick();
-  const { passCards, inactiveCards, signalConfig, trackingConfig } = useCommanderData();
+  const nowMs = now.getTime();
+  const { data, isLoading, errorMessage } = useCommanderData();
+  const { passCards, inactiveCards, signalConfig, trackingConfig } = data;
 
   const sortedCards: CommanderSortedCard[] = passCards
     .map((card) => {
-      const snapshot = getScheduledPassSnapshot(now.getTime(), card.passIndex, card.passName);
-      const state: CardState = card.forceAlarm
-        ? "alarm"
-        : snapshot.isActive
-          ? "active"
-          : "upcoming";
-      const priority = state === "active" || state === "alarm" ? 0 : state === "upcoming" ? 1 : 2;
-      const upcomingSortMs = snapshot.nextStartMs - now.getTime();
-      const activeSortMs = snapshot.endMs - now.getTime();
+      const snapshot = getScheduledPassSnapshot(nowMs, card.passIndex, card.passName);
+      const state = deriveCardState(card.forceAlarm, snapshot.isActive);
+      // Sort by real pass timing buckets: active first, upcoming second.
+      // Alarm is visual state only and still follows pass timing order.
+      const priority = snapshot.isActive ? 0 : 1;
+      const upcomingSortMs = snapshot.nextStartMs - nowMs;
+      const activeSortMs = snapshot.endMs - nowMs;
       return { ...card, snapshot, state, priority, upcomingSortMs, activeSortMs };
     })
     .sort((a, b) => {
       if (a.priority !== b.priority) return a.priority - b.priority;
-      if (a.priority === 0) return a.activeSortMs - b.activeSortMs;
-      if (a.priority === 1) return a.upcomingSortMs - b.upcomingSortMs;
-      return a.name.localeCompare(b.name);
+      if (a.snapshot.isActive) {
+        return a.activeSortMs - b.activeSortMs;
+      }
+      return a.upcomingSortMs - b.upcomingSortMs;
     });
 
   return (
     <div className="bg-[#0a2237] relative w-[1920px] h-[1080px]">
       <TopBar stationLabel="STATION MASTER THESIS" />
+      {errorMessage ? (
+        <div className="absolute left-[22px] right-[22px] top-[120px] rounded-[8px] border border-[#7d2d2d] bg-[#2b1616] px-8 py-6 text-[#f3c6c6]">
+          <p className="text-[34px] font-bold leading-[1]">Data unavailable</p>
+          <p className="mt-3 text-[22px] leading-[1.2] text-[#e3b4b4]">
+            Unable to load backend data. Check connection or API status and try again.
+          </p>
+          <p className="mt-2 text-[18px] leading-[1.2] text-[#d7a2a2]">
+            {`Details: ${errorMessage}`}
+          </p>
+        </div>
+      ) : null}
+      {isLoading && !errorMessage ? (
+        <div className="absolute left-[22px] right-[22px] top-[120px] rounded-[8px] border border-[#27476a] bg-[#11263d] px-8 py-5 text-[#c7d9ef]">
+          <p className="text-[26px] leading-[1]">Loading data...</p>
+        </div>
+      ) : null}
       <div className="absolute left-[22px] right-[22px] top-[78px] grid grid-cols-4 grid-rows-2 gap-x-8 gap-y-20">
         {sortedCards.map((card) => (
           <MasterPassCard

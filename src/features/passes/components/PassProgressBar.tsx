@@ -1,3 +1,4 @@
+// Visualizes pass progress over time.
 export function PassProgressBar({
   progress,
   showIndicator = false,

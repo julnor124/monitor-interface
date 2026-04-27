@@ -1,3 +1,2 @@
+// Re-exports the public API for this module.
 export { CommanderScreen } from "./components/CommanderScreen";
-export { useCommanderData } from "./hooks/useCommanderData";
-export type { CommanderData, CommanderSortedCard } from "./types";

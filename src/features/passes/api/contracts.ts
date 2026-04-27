@@ -1,4 +1,5 @@
 import { z } from "zod";
+// Defines typed contracts for API payloads.
 
 export const modeLabelDtoSchema = z.enum(["PROG", "TRACK"]);
 

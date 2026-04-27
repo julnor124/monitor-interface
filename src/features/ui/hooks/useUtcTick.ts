@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+// Emits a ticking UTC timestamp for UI updates.
 
 export function useUtcTick() {
   const [now, setNow] = useState(new Date());
