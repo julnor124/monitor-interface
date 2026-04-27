@@ -1,17 +1,15 @@
-import { useEffect, useState } from "react";
-import Frame from "./imports/Frame1/Frame1";
+import { useEffect, useState, type ReactNode } from "react";
 
 const DESIGN_WIDTH = 1920;
 const DESIGN_HEIGHT = 1080;
-const VIEWPORT_PADDING = 8;
 
-export default function App() {
+export function TvStage({ children }: { children: ReactNode }) {
   const [scale, setScale] = useState(1);
 
   useEffect(() => {
     const updateScale = () => {
-      const viewportWidth = window.innerWidth - VIEWPORT_PADDING * 2;
-      const viewportHeight = window.innerHeight - VIEWPORT_PADDING * 2;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
       const widthScale = viewportWidth / DESIGN_WIDTH;
       const heightScale = viewportHeight / DESIGN_HEIGHT;
       setScale(Math.min(widthScale, heightScale));
@@ -39,7 +37,7 @@ export default function App() {
             transformOrigin: "top left",
           }}
         >
-          <Frame />
+          {children}
         </div>
       </div>
     </div>
