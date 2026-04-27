@@ -1,0 +1,159 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MasterPassCard snapshots > matches inactive visual structure 1`] = `
+<DocumentFragment>
+  <div
+    class="relative h-[320px] overflow-hidden rounded-[8px] border border-[#1d3d57] bg-[#172737] opacity-70"
+  >
+    <div
+      class="grid h-full grid-rows-[84px_1fr_70px] px-5 pt-4"
+    >
+      <div>
+        <p
+          class="truncate text-[46px] leading-[1] text-[#d8e3ef]"
+        >
+          Vilma
+        </p>
+      </div>
+      <div
+        class="flex flex-col justify-center gap-2"
+      >
+        <p
+          class="text-[24px] leading-[1.1] text-[#c3cfdd]"
+        >
+          Inactive standby
+        </p>
+        <p
+          class="text-[18px] leading-[1.1] text-[#9eb1c5]"
+        >
+          No active pass
+        </p>
+      </div>
+      <div
+        class="-mx-5 flex min-w-0 h-full w-[calc(100%+2.5rem)] items-center rounded-b-[8px] text-[30px] leading-[1] text-[#d8e3ef] bg-[#4d5f71]"
+      >
+        <p
+          class="block w-full overflow-hidden text-ellipsis whitespace-nowrap px-5"
+        >
+          Mission: north_arc_2148
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`MasterPassCard snapshots > matches upcoming visual structure 1`] = `
+<DocumentFragment>
+  <div
+    class="relative h-[320px] overflow-hidden rounded-[8px] border border-[#1d3d57] bg-[#1a324b]"
+  >
+    <div
+      class="grid h-full grid-rows-[72px_50px_1fr_62px] px-5 pt-5"
+    >
+      <div
+        class="flex min-w-0 items-start justify-between gap-2"
+      >
+        <p
+          class="min-w-0 flex-1 truncate pr-2 text-[42px] leading-[1] text-[#f2f2f2]"
+        >
+          Emma
+        </p>
+        <p
+          class="max-w-[52%] truncate text-right text-[32px] leading-[1] text-[#dbe6f4]"
+        >
+          00:49-01:10
+        </p>
+      </div>
+      <div
+        class="relative h-[44px] rounded-[4px] border border-[#22384a] bg-[#444]"
+      >
+        <div
+          class="absolute inset-[0_100%_0_0] rounded-[4px] bg-[#3abeff] transition-[right] duration-700 ease-linear"
+          style="right: 100%;"
+        />
+      </div>
+      <div
+        class="grid min-w-0 grid-cols-[max-content_132px_minmax(0,1fr)] items-end gap-4 py-3"
+      >
+        <div
+          class="tabular-nums text-[30px] leading-[1.2] text-[#f2f2f2]"
+        >
+          <p
+            class="whitespace-nowrap"
+          >
+            Az: 98.35°
+          </p>
+          <p
+            class="whitespace-nowrap text-[#c9c9c9]"
+          >
+            El: 14.22°
+          </p>
+        </div>
+        <div
+          class="min-w-0 flex flex-col items-center"
+        >
+          <div
+            class="h-[42px]"
+          />
+          <div
+            class="mt-1 h-[16px]"
+          />
+        </div>
+        <div
+          class="min-w-0 self-start pt-1 text-right"
+        >
+          <div
+            class="mt-2 flex min-w-0 items-center justify-end gap-1"
+          >
+            <div
+              class="shrink-0"
+            >
+              <div
+                class="h-[42px] w-[34px]"
+              >
+                <svg
+                  class="block size-full"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  viewBox="0 0 35 43"
+                >
+                  <path
+                    d="M31.5 1.5V6.43125C31.5 12.786 25.232 17.9375 17.5 17.9375M3.5 1.5V6.43125C3.5 12.786 9.76801 17.9375 17.5 17.9375M17.5 17.9375C25.232 17.9375 31.5 23.089 31.5 29.4438V34.375M17.5 17.9375C9.76801 17.9375 3.5 23.089 3.5 29.4437V34.375"
+                    stroke="#F2F2F2"
+                    stroke-width="3"
+                  />
+                  <path
+                    d="M1.5 1.5H33.5M33.5 34.375H1.5"
+                    stroke="#F2F2F2"
+                    stroke-linecap="round"
+                    stroke-width="3"
+                  />
+                </svg>
+              </div>
+            </div>
+            <div
+              class="shrink-0 text-right"
+            >
+              <p
+                class="whitespace-nowrap font-bold leading-[1] text-[#f2f2f2] text-[clamp(1.8rem,3.2vh,2.6rem)]"
+              >
+                12min
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="-mx-5 flex min-w-0 h-full w-[calc(100%+2.5rem)] items-center rounded-b-[8px] text-[30px] leading-[1] text-[#f2f2f2] bg-[#c3b167]"
+      >
+        <p
+          class="block w-full overflow-hidden text-ellipsis whitespace-nowrap px-5"
+        >
+          Mission: horizon_link_9032
+        </p>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
