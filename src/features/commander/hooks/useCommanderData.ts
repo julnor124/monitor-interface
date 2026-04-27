@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react";
 import { passesMockApi } from "../../passes/api/passesMockApi";
-import type { PassCardDefinition } from "../../passes/types";
-import type { InactiveCardViewModel } from "../../passes/api/mappers";
+import { signalMockApi } from "../../signal/api/signalMockApi";
+import { trackingMockApi } from "../../tracking/api/trackingMockApi";
+import type { CommanderData } from "../types";
 
-type CommanderDataState = {
-  passCards: PassCardDefinition[];
-  inactiveCards: InactiveCardViewModel[];
-};
-
-const INITIAL_STATE: CommanderDataState = {
+const INITIAL_STATE: CommanderData = {
   passCards: [],
   inactiveCards: [],
+  signalConfig: { labels: ["X", "S", "S"] },
+  trackingConfig: { azLabel: "Az", elLabel: "El" },
 };
 
 export function useCommanderData() {
-  const [state, setState] = useState<CommanderDataState>(INITIAL_STATE);
+  const [state, setState] = useState<CommanderData>(INITIAL_STATE);
 
   useEffect(() => {
     let mounted = true;
@@ -22,9 +20,11 @@ export function useCommanderData() {
     Promise.all([
       passesMockApi.getPassCardDefinitions(),
       passesMockApi.getInactiveCards(),
-    ]).then(([passCards, inactiveCards]) => {
+      signalMockApi.getDisplayConfig(),
+      trackingMockApi.getDisplayConfig(),
+    ]).then(([passCards, inactiveCards, signalConfig, trackingConfig]) => {
       if (!mounted) return;
-      setState({ passCards, inactiveCards });
+      setState({ passCards, inactiveCards, signalConfig, trackingConfig });
     });
 
     return () => {

@@ -1,4 +1,4 @@
-import { CommanderScreen } from "../features/commander/components/CommanderScreen";
+import { CommanderScreen } from "../features/commander";
 import { TvStage } from "./layout/TvStage";
 import { AppProviders } from "./providers/AppProviders";
 
