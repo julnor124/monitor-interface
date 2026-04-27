@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+# Monitor Interface
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+View-only TV interface built with React, TypeScript, and Vite.
 
-Currently, two official plugins are available:
+## Quick Start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run test` - Run tests (Vitest)
+- `npm run typecheck` - Run strict TypeScript checks (`tsc --noEmit`)
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Quality Gate
+
+```bash
+npm run typecheck && npm run lint && npm run test && npm run build
 ```
+
+## Architecture
+
+The app is structured as feature-first modules with a dedicated app shell.
+
+```text
+src/
+  app/
+    App.tsx
+    layout/
+    providers/
+  features/
+    commander/
+      components/
+      hooks/
+    passes/
+      api/
+      components/
+      hooks/
+      types.ts
+    signal/
+      components/
+    tracking/
+      components/
+      hooks/
+    ui/
+      components/
+      hooks/
+  shared/
+    components/
+  test/
+```
+
+### Boundary Rules
+
+- `src/app` contains shell concerns only (stage/layout/providers).
+- Feature logic stays inside `src/features/<feature>`.
+- API boundaries live in feature `api` modules:
+  - `contracts.ts` (runtime schemas via zod)
+  - `mappers.ts` (DTO to view model)
+  - `*Api.ts` (feature interface)
+  - `*MockApi.ts` (mock implementation)
+- Reusable cross-feature UI belongs in `src/shared/components`.
+
+## Display Notes (TV Target)
+
+- Designed for a fixed `1920x1080` canvas.
+- `TvStage` applies uniform scaling and letterboxing while preserving pixel layout.
+- Interface is view-only (no interactive control flow).
