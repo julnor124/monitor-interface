@@ -22,16 +22,20 @@ export function CommanderScreen() {
     .map((card) => {
       const snapshot = getScheduledPassSnapshot(nowMs, card.passIndex, card.passName);
       const state = deriveCardState(card.forceAlarm, snapshot.isActive);
-      // Sort by real pass timing buckets: active first, upcoming second.
-      // Alarm is visual state only and still follows pass timing order.
-      const priority = snapshot.isActive ? 0 : 1;
+      // Keep active and alarm cards left-most, then upcoming by nearest start time.
+      const priority = state === "active" || state === "alarm" ? 0 : 1;
       const upcomingSortMs = snapshot.nextStartMs - nowMs;
-      const activeSortMs = snapshot.endMs - nowMs;
+      // For alarm cards that are not yet active, sort by time-to-start so
+      // placement matches the visible countdown label.
+      const activeSortMs =
+        state === "alarm" && !snapshot.isActive
+          ? Math.max(0, snapshot.startMs - nowMs)
+          : snapshot.endMs - nowMs;
       return { ...card, snapshot, state, priority, upcomingSortMs, activeSortMs };
     })
     .sort((a, b) => {
       if (a.priority !== b.priority) return a.priority - b.priority;
-      if (a.snapshot.isActive) {
+      if (a.state === "active" || a.state === "alarm") {
         return a.activeSortMs - b.activeSortMs;
       }
       return a.upcomingSortMs - b.upcomingSortMs;

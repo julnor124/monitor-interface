@@ -9,6 +9,12 @@ import { MasterHourglassIcon } from "./MasterHourglassIcon";
 import { PassProgressBar } from "./PassProgressBar";
 // Renders the primary card for pass details.
 
+const ALARM_COUNTDOWN_WINDOW_MS = 21 * 60 * 1000;
+
+function clampPercent(value: number) {
+  return Math.min(100, Math.max(0, value));
+}
+
 export function MasterPassCard({
   name,
   passIndex,
@@ -62,11 +68,18 @@ export function MasterPassCard({
           ? "bg-[#c3b167]"
           : "bg-[#4d5f71]";
   const upcomingLabel = pass.primary.replace(/\s*left$/, "");
-  const isLongUpcomingLabel = upcomingLabel.length >= 8;
   const liveCountdownLabel =
     cardState === "alarm" && !pass.isActive
       ? `${formatRemainingMs(Math.max(0, pass.startMs - now.getTime()))} left`
       : pass.primary;
+  const liveProgress =
+    cardState === "alarm" && !pass.isActive
+      ? clampPercent(
+          ((ALARM_COUNTDOWN_WINDOW_MS - Math.max(0, pass.startMs - now.getTime())) /
+            ALARM_COUNTDOWN_WINDOW_MS) *
+            100
+        )
+      : pass.progress;
 
   if (cardState === "inactive") {
     return (
@@ -87,7 +100,8 @@ export function MasterPassCard({
     );
   }
 
-  const isLive = cardState === "active" || cardState === "alarm";
+  // Alarm cards should keep live layout while timing still drives normal passes.
+  const isLive = pass.isActive || cardState === "alarm";
   return (
     <div className="relative h-[320px] overflow-hidden rounded-[8px] border border-[#1d3d57] bg-[#1a324b]">
       <div className="grid h-full grid-rows-[72px_50px_1fr_62px] px-5 pt-5">
@@ -100,7 +114,7 @@ export function MasterPassCard({
           )}
         </div>
 
-        <PassProgressBar progress={isLive ? pass.progress : 0} showIndicator={isLive} />
+        <PassProgressBar progress={isLive ? liveProgress : 0} showIndicator={isLive} />
 
         <div className="grid min-w-0 grid-cols-[max-content_132px_minmax(0,1fr)] items-end gap-4 py-3">
           <AzElReadout az={az} el={el} azLabel={azLabel} elLabel={elLabel} />
@@ -118,7 +132,7 @@ export function MasterPassCard({
                 <div className="shrink-0 text-right">
                   <p
                     className={`whitespace-nowrap font-bold leading-[1] text-[#f2f2f2] ${
-                      isLongUpcomingLabel
+                      upcomingLabel.length >= 8
                         ? "text-[clamp(1.6rem,2.8vh,2.2rem)]"
                         : "text-[clamp(1.8rem,3.2vh,2.6rem)]"
                     }`}
